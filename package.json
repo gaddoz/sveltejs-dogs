@@ -3,22 +3,35 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
+    "build": "yarn run utils:openapigen && yarn run rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
-    "ci": "rm -rf node_modules && yarn install --frozen-lockfile"
+    "ci": "rm -rf node_modules && yarn install --frozen-lockfile",
+    "utils:openapigen": "node_modules/.bin/openapi-generator-cli generate -i openapi/sample.yaml -g typescript-rxjs -o src/app/core/api/generated",
+    "utils:mockapi-local": "cd mock-api && yarn && node ./server.js ",
+    "utils:mockapi": "docker-compose up -d mockapi ",
+    "validate": "svelte-check"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.4.26",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
+    "@tsconfig/svelte": "^1.0.0",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.0.0"
+    "rxjs": "^6.5.3",
+    "svelte": "^3.0.0",
+    "svelte-check": "^1.0.0",
+    "svelte-preprocess": "^4.0.0",
+    "tslib": "^2.0.0",
+    "typescript": "^4.0.0"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.0"
+    "sirv-cli": "^1.0.0",
+    "svelte-rx": "^0.0.7"
   }
 }
